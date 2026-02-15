@@ -75,7 +75,8 @@ class FindViableNodesService
             ->selectRaw('IFNULL(SUM(servers.memory), 0) as sum_memory')
             ->selectRaw('IFNULL(SUM(servers.disk), 0) as sum_disk')
             ->leftJoin('servers', 'servers.node_id', '=', 'nodes.id')
-            ->where('nodes.public', 1);
+            ->where('nodes.public', 1)
+            ->where('nodes.maintenance_mode', 0);
 
         if (!empty($this->locations)) {
             $query = $query->whereIn('nodes.location_id', $this->locations);
