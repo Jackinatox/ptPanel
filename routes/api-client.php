@@ -67,6 +67,7 @@ Route::group([
     Route::get('/resources', Client\Servers\ResourceUtilizationController::class)->name('api:client:server.resources');
     Route::get('/activity', Client\Servers\ActivityLogController::class)->name('api:client:server.activity');
 
+    Route::get('/archive', Client\Servers\ArchiveController::class);
     Route::post('/command', [Client\Servers\CommandController::class, 'index']);
     Route::post('/power', [Client\Servers\PowerController::class, 'index']);
 
@@ -85,6 +86,7 @@ Route::group([
         Route::put('/rename', [Client\Servers\FileController::class, 'rename']);
         Route::post('/copy', [Client\Servers\FileController::class, 'copy']);
         Route::post('/write', [Client\Servers\FileController::class, 'write']);
+        Route::post('/update', [Client\Servers\FileController::class, 'writeJson']);
         Route::post('/compress', [Client\Servers\FileController::class, 'compress']);
         Route::post('/decompress', [Client\Servers\FileController::class, 'decompress']);
         Route::post('/delete', [Client\Servers\FileController::class, 'delete']);

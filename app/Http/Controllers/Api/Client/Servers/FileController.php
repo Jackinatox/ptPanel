@@ -22,6 +22,7 @@ use Pterodactyl\Http\Requests\Api\Client\Servers\Files\CompressFilesRequest;
 use Pterodactyl\Http\Requests\Api\Client\Servers\Files\DecompressFilesRequest;
 use Pterodactyl\Http\Requests\Api\Client\Servers\Files\GetFileContentsRequest;
 use Pterodactyl\Http\Requests\Api\Client\Servers\Files\WriteFileContentRequest;
+use Pterodactyl\Http\Requests\Api\Client\Servers\Files\WriteJsonFileContentRequest;
 
 class FileController extends ClientApiController
 {
@@ -107,6 +108,21 @@ class FileController extends ClientApiController
     public function write(WriteFileContentRequest $request, Server $server): JsonResponse
     {
         $this->fileRepository->setServer($server)->putContent($request->get('file'), $request->getContent());
+
+        Activity::event('server:file.write')->property('file', $request->get('file'))->log();
+
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Writes the contents of the specified file to the server using a JSON request body.
+     * Accepts 'file' and 'content' as JSON fields instead of a raw request body.
+     *
+     * @throws \Pterodactyl\Exceptions\Http\Connection\DaemonConnectionException
+     */
+    public function writeJson(WriteJsonFileContentRequest $request, Server $server): JsonResponse
+    {
+        $this->fileRepository->setServer($server)->putContent($request->get('file'), $request->get('content') ?? '');
 
         Activity::event('server:file.write')->property('file', $request->get('file'))->log();
 

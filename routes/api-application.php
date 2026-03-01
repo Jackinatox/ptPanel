@@ -21,6 +21,11 @@ Route::group(['prefix' => '/users'], function () {
     Route::patch('/{user:id}', [Application\Users\UserController::class, 'update']);
 
     Route::delete('/{user:id}', [Application\Users\UserController::class, 'delete']);
+
+    // API Key Management for a specific user (admin-level)
+    Route::get('/{user:id}/api-keys', [Application\Users\ApiKeyController::class, 'index'])->name('api.application.users.api-keys');
+    Route::post('/{user:id}/api-keys', [Application\Users\ApiKeyController::class, 'store']);
+    Route::delete('/{user:id}/api-keys/{identifier}', [Application\Users\ApiKeyController::class, 'delete'])->name('api.application.users.api-keys.delete');
 });
 
 /*
@@ -44,6 +49,7 @@ Route::group(['prefix' => '/nodes'], function () {
 
     Route::group(['prefix' => '/{node:id}/allocations'], function () {
         Route::get('/', [Application\Nodes\AllocationController::class, 'index'])->name('api.application.allocations');
+        Route::get('/free', Application\Nodes\FreeAllocationController::class)->name('api.application.allocations.free');
         Route::post('/', [Application\Nodes\AllocationController::class, 'store']);
         Route::delete('/{allocation:id}', [Application\Nodes\AllocationController::class, 'delete'])->name('api.application.allocations.view');
     });
