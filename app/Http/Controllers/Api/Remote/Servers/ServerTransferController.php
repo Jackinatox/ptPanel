@@ -3,6 +3,8 @@
 namespace Pterodactyl\Http\Controllers\Api\Remote\Servers;
 
 use Illuminate\Http\Request;
+use Pterodactyl\Models\Node;
+use Webmozart\Assert\Assert;
 use Illuminate\Http\Response;
 use Webmozart\Assert\Assert;
 use Pterodactyl\Models\Node;
@@ -45,9 +47,12 @@ class ServerTransferController extends Controller
             throw new ConflictHttpException('Server is not being transferred.');
         }
 
+        /* @var Node $node */
+        Assert::isInstanceOf($node = $request->attributes->get('node'), Node::class);
+
         // Either node can tell the panel that the transfer has failed. Only the new node
         // can tell the panel that it was successful.
-        if ($node->id !== $transfer->new_node && $node->id !== $transfer->old_node) {
+        if (! $node->is($transfer->newNode) && ! $node->is($transfer->oldNode)) {
             throw new HttpForbiddenException('Requesting node does not have permission to access this server.');
         }
 
@@ -69,9 +74,12 @@ class ServerTransferController extends Controller
             throw new ConflictHttpException('Server is not being transferred.');
         }
 
+        /* @var Node $node */
+        Assert::isInstanceOf($node = $request->attributes->get('node'), Node::class);
+
         // Only the new node communicates a successful state to the panel, so we should
         // not allow the old node to hit this endpoint.
-        if ($node->id !== $transfer->new_node) {
+        if (! $node->is($transfer->newNode)) {
             throw new HttpForbiddenException('Requesting node does not have permission to access this server.');
         }
 
