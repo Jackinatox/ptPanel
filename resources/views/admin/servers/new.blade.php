@@ -26,7 +26,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="pName">Server Name</label>
-                            <input type="text" class="form-control" id="pName" name="name" value="{{ old('name') }}" placeholder="Server Name">
+                            <input type="text" class="form-control" id="pName" name="name" value="{{ old('name', 'tempserver') }}" placeholder="Server Name">
                             <p class="small text-muted no-margin">Character limits: <code>a-z A-Z 0-9 _ - .</code> and <code>[Space]</code>.</p>
                         </div>
 
@@ -119,14 +119,14 @@
                     <div class="form-group col-xs-6">
                         <label for="pAllocationLimit" class="control-label">Allocation Limit</label>
                         <div>
-                            <input type="text" id="pAllocationLimit" name="allocation_limit" class="form-control" value="{{ old('allocation_limit', 0) }}"/>
+                            <input type="text" id="pAllocationLimit" name="allocation_limit" class="form-control" value="{{ old('allocation_limit', 3) }}"/>
                         </div>
                         <p class="text-muted small">The total number of allocations a user is allowed to create for this server.</p>
                     </div>
                     <div class="form-group col-xs-6">
                         <label for="pBackupLimit" class="control-label">Backup Limit</label>
                         <div>
-                            <input type="text" id="pBackupLimit" name="backup_limit" class="form-control" value="{{ old('backup_limit', 0) }}"/>
+                            <input type="text" id="pBackupLimit" name="backup_limit" class="form-control" value="{{ old('backup_limit', 5) }}"/>
                         </div>
                         <p class="text-muted small">The total number of backups that can be created for this server.</p>
                     </div>
@@ -146,7 +146,7 @@
                         <label for="pCPU">CPU Limit</label>
 
                         <div class="input-group">
-                            <input type="text" id="pCPU" name="cpu" class="form-control" value="{{ old('cpu', 0) }}" />
+                            <input type="text" id="pCPU" name="cpu" class="form-control" value="{{ old('cpu', 600) }}" />
                             <span class="input-group-addon">%</span>
                         </div>
 
@@ -169,7 +169,7 @@
                         <label for="pMemory">Memory</label>
 
                         <div class="input-group">
-                            <input type="text" id="pMemory" name="memory" class="form-control" value="{{ old('memory') }}" />
+                            <input type="text" id="pMemory" name="memory" class="form-control" value="{{ old('memory', 4096) }}" />
                             <span class="input-group-addon">MiB</span>
                         </div>
 
@@ -193,7 +193,7 @@
                         <label for="pDisk">Disk Space</label>
 
                         <div class="input-group">
-                            <input type="text" id="pDisk" name="disk" class="form-control" value="{{ old('disk') }}" />
+                            <input type="text" id="pDisk" name="disk" class="form-control" value="{{ old('disk', 20480) }}" />
                             <span class="input-group-addon">MiB</span>
                         </div>
 
