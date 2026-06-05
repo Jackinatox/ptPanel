@@ -43,7 +43,8 @@ enum ResourceLimit
     public function limit(): Limit
     {
         return match($this) {
-            self::Backup => Limit::perMinutes(15, 3),
+            self::Allocation => Limit::perMinute(25),
+            self::Backup => Limit::perMinutes(15, 10),
             self::Database => Limit::perMinute(2),
             self::FilePull => Limit::perMinutes(10, 5),
             self::Subuser => Limit::perMinutes(15, 10),
