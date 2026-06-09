@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Pterodactyl\Models\Node;
 use Webmozart\Assert\Assert;
 use Illuminate\Http\Response;
-use Webmozart\Assert\Assert;
-use Pterodactyl\Models\Node;
 use Illuminate\Http\JsonResponse;
 use Pterodactyl\Models\Allocation;
 use Illuminate\Support\Facades\Log;
